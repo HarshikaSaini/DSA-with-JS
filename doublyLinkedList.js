@@ -127,7 +127,63 @@ class DoublyLinkedList {
   }
   
 
-  print() {
+ swapHeadAndTail(){
+  if(this.length == 1) return ;
+  let temp = new Node();
+  temp.val = this.head.val;
+  this.head.val = this.tail.val;
+  this.tail.val = temp.val;
+  return this
+ }
+
+ 
+ reverse(){
+  let temp = null;
+  let current = this.head
+  // this.head.next = this.head.prev 
+  // this.head.prev = temp;
+  while(current !== null){
+   temp = current.prev
+   current.prev = current.next
+   current.next = temp
+   current = current.prev
+  }
+
+  temp = this.head;
+  this.head = this.tail;
+  this.tail = temp
+ return this
+
+ }
+
+
+ isCyclic(){
+  let fast = this.head;
+  let slow = this.head;
+  while(fast !== null && fast.next !== null){
+    slow = slow.next;
+    fast = fast.next.next
+    if(fast == slow ){
+      return true
+    }
+   
+  }
+  return false
+ }
+
+ palindrome(){
+  let left = this.head;
+  let right = this.tail;
+  if(this.length == 1) return this.head
+  for(let i = 0; i < Math.floor(this.length / 2); i++){
+    if(left.val !== right.val) return false
+    left = left.next
+    right = right.prev
+  }
+  return true
+ }
+
+print() {
     let current = this.head;
     while (current) {
       console.log(current.val);
@@ -138,7 +194,7 @@ class DoublyLinkedList {
 
 let obj = new DoublyLinkedList(10);
 obj.push(20);
-obj.push(30);
+obj.push(10);
 // obj.pop()
 // let res = obj.pop();
 // obj.unshiift(25)
@@ -149,6 +205,12 @@ obj.push(30);
 // console.log(res)
 // obj.insert(2,100)
 // obj.set(2,100)
-obj.remove(0)
- obj.print();
+// obj.remove(0)
+// obj.swapHeadAndTail()
+// obj.reverse()
+// obj.tail.next = obj.head.next
+// let res = obj.isCyclic()
+// console.log(res)
+console.log(obj.palindrome())
+obj.print();
 console.log(obj);
